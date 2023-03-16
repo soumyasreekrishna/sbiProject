@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="TemplateMo" name="author">
+
+    <title>State Bank of India/preform</title>
+
+
+    <link href="{% static 'css/bootstrap.min.css' %}">
+    <link href="{% static 'assets/css/login.css' %}" rel="stylesheet">
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+      <script>
+
+$(document).ready(function(){
+
+ var districtEle = $("#districtEle");
+ var branchEle = $("#branchEle");
+ var $options = branchEle.find('option');
+ districtEle.on('change',function(){
+    branchEle.html($options.filter('[id="'+ this.value  +'"]'));
+ }).trigger('change');
+
+
+});
+</script>
+</head>
+<body style="overflow-x:hidden; overflow-y:scroll;"></body>
+<header class="">
+    <nav class="navbar navbar-expand-lg row form-group">
+        <div class="container row" style="margin:16px;">
+            <div class="col-md-5"><a href=""><h2>SBI</h2></a></div>
+            <div class="col-md-6" style="font-size:21px;">
+                Hello {{user.username}}
+            </div>
+            <div class="col-md-1 nav-item">
+                <a href="/">Log out</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<section class="h-100 gradient-form" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+                <div class="card rounded-3 text-black">
+                    <div class="row g-0">
+                        <div class="card-body p-md-5 mx-md-4">
+
+                            <div class="text-center">
+                                <img alt="logo"
+                                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                                     style="width: 185px;">
+                                <h4 class="mt-1 mb-5 pb-1">We are SBI Team</h4>
+                                <form action="{%url 'form1' %}" method="post">
+
+                                    <header>
+                                        <h2>Application Form</h2>
+                                        <div>Please fill the form proper to get an account</div>
+                                    </header>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    {% block content %}
+                                    <form enctype="multipart/form-data" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Full Name</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="name" name="name" placeholder="Name"
+                                                       required type="text" value="">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Date of Birth</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="dob" name="dob"
+                                                       required type="date" value="">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Age</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="age" name="age"
+                                                       required type="number" value="">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Gender</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="gender" type="hidden"
+                                                       value="">
+                                                <div>
+                                                    <input id="male" name="gender"
+                                                           type="radio" value="male">
+                                                    <label class="choice">Male</label>
+                                                </div>
+                                                <div>
+                                                    <input id="female" name="gender"
+                                                           type="radio" value="female">
+                                                    <label class="choice">Female</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Phone Number</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="number" name="phone"
+                                                       required type="number" value="">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Mail Id</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="email" name="mailid"
+                                                       required type="email" value="">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Address</label>
+                                            <div class="col-sm-8">
+                                            <textarea class="form-control" id="address" name="address"
+                                                      required rows="5"></textarea>
+                                            </div>
+                                        </div>
+
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">District</label>
+                                            <div class="col-sm-8">
+
+                                                <select  class="form-control" id="districtEle" name="district">
+                                                    {% for i in district %}
+                                                    <option value={{i.id}} >
+                                                        {{i.name}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+
+                                            <label class="col-sm-4 col-form-label">Branch</label>
+                                            <div class="col-sm-8">
+
+                                                <select class="form-control" id="branchEle" name="branch">
+                                                    {% for k in branch %}
+                                                    <option value={{k.id}} id={{k.district_id}}>
+                                                        {{k.name}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Account type</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="account type" name="account">
+                                                    <option value="">--Account type--</option>
+                                                    <option value="Savings Account">Savings Account</option>
+                                                    <option value="Current Account">Current Account</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">Meterials provide</label>
+                                            <div class="col-sm-8">
+                                                <input id="debit" name="debit" type="checkbox"
+                                                       value="First Choice">
+                                                <label>Debit Card</label>
+                                                <br>
+
+                                                <input id="credit" name="credit" type="checkbox"
+                                                       value="Second Choice">
+                                                <label>Credit Card</label>
+                                                <br>
+
+                                                <input id="cheque" name="cheque" type="checkbox"
+                                                       value="Third Choice">
+                                                <label>Cheque book</label>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div>
+                                            <div>
+                                                <input class="btn btn-primary" id="saveForm1" name="saveForm1"
+                                                       type="submit" value="Submit">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+
+                                    </form>
+                                    {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
